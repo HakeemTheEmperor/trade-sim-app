@@ -770,28 +770,26 @@ const stockData = [
 
 function StockList() {
   return (
-    <div className="w-full  mt-10 flex justify-center">
-      <div className="w-full md:w-1/2 bg-white">
-        <h2
-          className="text-black text-xl p-2 antialiased font-bold
-         text-center"
-        >
+    <>
+      <div className="flex justify-between">
+        <h2 className="main_text text-xl p-2 antialiased font-bold">
           Available Stocks
         </h2>
-        <ul className="flex flex-col list-none p-3">
-          {stockData.map((stock) => (
-            <StockItem
-              key={stock.id}
-              symbol={stock.symbol}
-              companyName={stock.company_name}
-              currentPrice={stock.price.current_price}
-              percentageChange={stock.price.percentage_change}
-              logo={stock.image}
-            />
-          ))}
-        </ul>
+        <p className="text-green-600 p-2">view all &rarr;</p>
       </div>
-    </div>
+      <ul className="flex flex-col list-none py-4">
+        {stockData.map((stock) => (
+          <StockItem
+            key={stock.id}
+            symbol={stock.symbol}
+            companyName={stock.company_name}
+            currentPrice={stock.price.current_price}
+            percentageChange={stock.price.percentage_change}
+            logo={stock.image}
+          />
+        ))}
+      </ul>
+    </>
   );
 }
 

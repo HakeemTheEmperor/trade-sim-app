@@ -1,15 +1,32 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import BottomNav from "./components/BottomNav";
-import StockList from "./components/StockList";
-import TopNav from "./components/TopNav";
+import Home from "./pages/Home";
+import Market from "./pages/Market";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
-    <>
-      <TopNav />
-      <StockList />
-      <BottomNav />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="/market"
+          element={<Market />}
+        />
+        <Route
+          path="/signup"
+          element={<SignUpPage />}
+        />
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

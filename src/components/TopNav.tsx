@@ -3,10 +3,13 @@ import "../index.css";
 
 function TopNav() {
   return (
-    <div className="sticky top-0 w-full p-6 z-10 rounded-xl shadow-md main_text">
+    <div className="top-0 w-full p-3 z-10 rounded-xl shadow-md ">
       <div className="flex justify-between">
-        <p>Company</p>
-        <MdNotifications size={30} />
+        <p className="text-white font-bold">Company</p>
+        <MdNotifications
+          size={30}
+          fill="black"
+        />
       </div>
     </div>
   );

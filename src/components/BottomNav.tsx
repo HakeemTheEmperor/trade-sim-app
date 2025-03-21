@@ -4,7 +4,7 @@ import { MdHome } from "react-icons/md";
 
 function BottomNav() {
   return (
-    <div className="sticky bottom-0 w-full p-3 z-10 bg-zinc-100">
+    <div className="sticky bottom-0 w-full p-3 z-10 bg-white rounded-md">
       <ul className="flex justify-around">
         <li className="flex flex-col justify-center">
           <MdHome

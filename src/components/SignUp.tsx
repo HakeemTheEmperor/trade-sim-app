@@ -1,12 +1,13 @@
 import MainButton from "./MainButton";
 import Input from "./TextInput";
+import "../index.css";
 
 function SignUp() {
   return (
     <div className="mb-10">
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-full max-w-md rounded-xl shadow-md py-8 px-8 bg-white">
-          <h2 className="text-[28px] font-bold text-gray-700 mb-6 text-center">
+        <div className="w-full max-w-md rounded-xl shadow-md py-8 px-8 transparent_light">
+          <h2 className="text-[28px] font-bold main_text mb-6 text-center">
             Create An Account
           </h2>
           <form className="flex flex-col w-full max-w-md">
@@ -38,7 +39,7 @@ function SignUp() {
             </div>
             <MainButton
               text="Create"
-              onClick={() => console.log("Hello World")}
+              Click={() => console.log("Hello World")}
             />
           </form>
         </div>

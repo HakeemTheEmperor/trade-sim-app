@@ -1,12 +1,15 @@
 interface MainButtonProps {
   text: string;
-  onClick: () => void;
+  Click: () => void;
 }
 
-function MainButton({ text }: MainButtonProps) {
+function MainButton({ text, Click }: MainButtonProps) {
   return (
     <div className="flex justify-center">
-      <button className="bg-gray-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-1/2">
+      <button
+        className="bg-green-600 cursor-pointer hover:border-green-600 text-white  py-2 px-4 rounded-3xl w-full hover:border-2 hover:text-green-600 hover:bg-transparent m-2"
+        onClick={Click}
+      >
         {text}
       </button>
     </div>
