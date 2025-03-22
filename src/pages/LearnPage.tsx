@@ -4,7 +4,7 @@ import Main from "../components/Main";
 import Test from "../components/Test";
 import TopNav from "../components/TopNav";
 
-function Home() {
+function LearnPage() {
   return (
     <>
       <TopNav />
@@ -17,4 +17,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default LearnPage;

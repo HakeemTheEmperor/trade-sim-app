@@ -1,33 +1,40 @@
 import { LuChartNoAxesCombined } from "react-icons/lu";
 import { FaBookmark, FaUser } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 
 function BottomNav() {
   return (
-    <div className="sticky bottom-0 w-full p-3 z-10 bg-white rounded-md">
+    <div className="fixed bottom-0 left-0 w-full p-3 z-10 bg-white rounded-md shadow-md">
       <ul className="flex justify-around">
-        <li className="flex flex-col justify-center">
-          <MdHome
-            className="w-full"
-            size={20}
-          />
-          <span className="font-semibold">Portfolio</span>
-        </li>
-        <li className="flex flex-col justify-center">
-          <FaBookmark
-            className="w-full"
-            size={20}
-          />
-          <span className="font-semibold">Watchlist</span>
-        </li>
-        <li className="flex flex-col justify-center">
-          <LuChartNoAxesCombined
-            className="w-full"
-            size={20}
-          />
-          <span className="font-semibold">Market</span>
-        </li>
-        <li className="flex flex-col justify-center">
+        <NavLink to="/">
+          <li className="flex flex-col justify-center items-center">
+            <MdHome
+              className="w-full"
+              size={20}
+            />
+            <span className="font-semibold">Portfolio</span>
+          </li>
+        </NavLink>
+        <NavLink to="/learn">
+          <li className="flex flex-col justify-center items-center">
+            <FaBookmark
+              className="w-full"
+              size={20}
+            />
+            <span className="font-semibold">Learn</span>
+          </li>
+        </NavLink>
+        <NavLink to="/market">
+          <li className="flex flex-col justify-center items-center">
+            <LuChartNoAxesCombined
+              className="w-full"
+              size={20}
+            />
+            <span className="font-semibold">Market</span>
+          </li>
+        </NavLink>
+        <li className="flex flex-col justify-center items-center">
           <FaUser
             className="w-full"
             size={20}
