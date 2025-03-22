@@ -1,0 +1,11 @@
+      y: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          display: true,
+          color: "rgba(255, 255, 255, 0.7)",
+          callback: (value: number) => `$${value.toFixed(2)}`,
+        },
+        beginAtZero: false,
+      },

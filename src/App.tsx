@@ -4,11 +4,16 @@ import LearnPage from "./pages/LearnPage";
 import Market from "./pages/Market";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
         <Route
           path="/learn"
           element={<LearnPage />}
