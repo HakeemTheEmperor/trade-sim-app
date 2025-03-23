@@ -1,16 +1,13 @@
-import BottomNav from "../components/BottomNav";
+import CenterBox from "../components/CenterBox";
 import Main from "../components/Main";
 import SignIn from "../components/SignIn";
-import TopNav from "../components/TopNav";
 
 function LoginPage() {
   return (
     <>
-      <TopNav />
-      <Main>
+      <CenterBox>
         <SignIn />
-      </Main>
-      <BottomNav />
+      </CenterBox>
     </>
   );
 }

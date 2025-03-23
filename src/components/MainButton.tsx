@@ -1,6 +1,6 @@
 interface MainButtonProps {
   text: string;
-  Click: () => void;
+  Click: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 function MainButton({ text, Click }: MainButtonProps) {

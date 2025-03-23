@@ -1,16 +1,12 @@
-import BottomNav from "../components/BottomNav";
-import Main from "../components/Main";
+import CenterBox from "../components/CenterBox";
 import SignUp from "../components/SignUp";
-import TopNav from "../components/TopNav";
 
 function SignUpPage() {
   return (
     <>
-      <TopNav />
-      <Main>
+      <CenterBox>
         <SignUp />
-      </Main>
-      <BottomNav />
+      </CenterBox>
     </>
   );
 }
