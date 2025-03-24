@@ -30,6 +30,7 @@ function ProtectedRoute() {
     return <Outlet />;
   } catch (error) {
     localStorage.removeItem("token"); // Invalid token case
+    localStorage.removeItem("user");
     return (
       <Navigate
         to="/login"

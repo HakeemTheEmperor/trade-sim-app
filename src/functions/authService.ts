@@ -22,7 +22,6 @@ export async function handleSignUp(credentials: {
     throw data;
   }
 
-  console.log(data);
   localStorage.setItem("token", data.token);
   localStorage.setItem("user", data.user);
 
@@ -44,11 +43,9 @@ export async function handleLogin(credentials: {
 
   const data = await response.json();
   if (!response.ok) {
-    console.log(data);
     throw data;
   }
 
-  console.log(data);
   localStorage.setItem("token", data.token);
   localStorage.setItem("user", JSON.stringify(data.user));
 
