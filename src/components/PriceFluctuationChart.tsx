@@ -52,7 +52,7 @@ function PriceFluctuationChart({ data }: PriceFluctuationChartProps) {
         backgroundColor: "rgba(117, 251, 76, 0.2)",
         fill: true,
         tension: 0.3,
-        pointRadius: 1,
+        pointRadius: 2,
         borderWidth: 1,
       },
     ],

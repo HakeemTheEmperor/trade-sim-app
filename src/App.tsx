@@ -9,6 +9,8 @@ import Layout from "./pages/Layout";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import UserStocksPage from "./pages/sub/UserStocksPage";
 import StockViewPage from "./pages/sub/StockViewPage";
+import BuyStockPage from "./pages/sub/BuyStockPage";
+import SellStockPage from "./pages/sub/SellStockPage";
 
 function App() {
   return (
@@ -34,6 +36,14 @@ function App() {
             <Route
               path="userstocks"
               element={<UserStocksPage />}
+            />
+            <Route
+              path="buy/:stockSymbol"
+              element={<BuyStockPage />}
+            />
+            <Route
+              path="sell/:stockSymbol"
+              element={<SellStockPage />}
             />
             <Route
               path="stocks/:stockSymbol"

@@ -3,10 +3,11 @@ interface SecondaryButtonProps {
   Click: () => void;
 }
 
-function SecondaryButton({ text }: SecondaryButtonProps) {
+function SecondaryButton({ text, Click }: SecondaryButtonProps) {
   return (
     <div className="flex justify-center">
       <button
+        onClick={Click}
         className={`text-green-600 cursor-pointer py-2 px-6 rounded-3xl w-full border-green-600 border-2 mt-2 hover:bg-green-600 hover:text-white `}
       >
         {text}

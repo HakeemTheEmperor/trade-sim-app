@@ -4,7 +4,7 @@ import PercentageChange from "./PercentageChange";
 import SecondaryButton from "./SecondaryButton";
 import PriceFluctuationChart from "./PriceFluctuationChart";
 import { StockIntroProp } from "../mockData/Data";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchStockData,
   fetchStockPriceHistory,
@@ -47,11 +47,24 @@ function StockIntro({
 
 function StockView() {
   const { stockSymbol } = useParams();
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [companyData, setCompanyData] = useState<any>(null);
   const [chartData, setChartData] = useState<any>(null);
   const [quantity, setQuantity] = useState<number | null>(null);
   const TRUNCATE_LENGTH = 100;
+
+  const handleBuy = async () => {
+    if (stockSymbol) {
+      navigate(`/buy/${stockSymbol}`);
+    }
+  };
+
+  const handleSell = async () => {
+    if (stockSymbol) {
+      navigate(`/sell/${stockSymbol}`);
+    }
+  };
 
   useEffect(() => {
     if (!stockSymbol) return;
@@ -147,12 +160,12 @@ function StockView() {
       <div className="border-t-2 mb-3 pt-4 flex justify-evenly">
         <SecondaryButton
           text="Buy"
-          Click={() => console.log("Hello World")}
+          Click={handleBuy}
         />
         {quantity ? (
           <SecondaryButton
             text="Sell"
-            Click={() => console.log("Hello World")}
+            Click={handleSell}
           />
         ) : (
           <InactiveButton

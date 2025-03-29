@@ -1,11 +1,11 @@
 import Breadcrumbs from "../components/Breadcrumbs";
-import UserStocks from "../components/UserStocks";
+import BuyStock from "../components/BuyStock";
 
 function TestPage() {
   return (
     <>
       <Breadcrumbs />
-      <UserStocks />
+      <BuyStock />
     </>
   );
 }

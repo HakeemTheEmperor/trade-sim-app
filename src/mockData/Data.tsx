@@ -50,6 +50,14 @@ interface StockListProp {
   stockData: StockData[];
 }
 
+interface WalletProp {
+  id: number;
+  balance: number;
+  currency: string;
+  created_at: string;
+  updated_at: string;
+}
+
 const chartData: ChartData[] = [
   {
     cp: "245.8300",
@@ -1074,4 +1082,5 @@ export type {
   StockIntroProp,
   UserStockItem,
   StockListProp,
+  WalletProp,
 };
