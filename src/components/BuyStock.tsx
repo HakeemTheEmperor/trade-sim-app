@@ -56,7 +56,6 @@ function BuyStock() {
   };
 
   useEffect(() => {
-    console.log(stockSymbol);
     if (!stockSymbol) return;
 
     const fetchData = async () => {
@@ -88,7 +87,6 @@ function BuyStock() {
     fetchQuantity();
     fetchWallets();
   }, [stockSymbol]);
-  console.log(selectedWallet);
 
   if (!stockData) return <p className="text-white">Loading company data...</p>;
   if (!wallets) return <p className="text-white">Loading wallets...</p>;

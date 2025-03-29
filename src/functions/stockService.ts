@@ -178,6 +178,30 @@ const sellStockUser = async (reqBody: {
   }
 };
 
+const stockSearch = async (query: string, searchType: string) => {
+  const token = localStorage.getItem("token");
+  const baseUrl = `${BASE_URL}/stocks/search`;
+  const url =
+    searchType === "symbol"
+      ? `${baseUrl}/symbol/${query}`
+      : `${baseUrl}/company/${query}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": API_KEY,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = await response.json();
+  if (response.ok && result.data) {
+    return result.data;
+  } else {
+    throw result;
+  }
+};
+
 export {
   fetchUserStock,
   fetchPortfolio,
@@ -186,4 +210,5 @@ export {
   fetchStockQuantity,
   buyStockUser,
   sellStockUser,
+  stockSearch,
 };

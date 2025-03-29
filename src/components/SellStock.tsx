@@ -43,8 +43,6 @@ function SellStock() {
       setError("Error getting quantity owned");
       return;
     }
-    console.log(quantityOwned);
-    console.log(sellQuantity);
     if (sellQuantity > quantityOwned) {
       setError("You do not have enough stocks to sell.");
       return;

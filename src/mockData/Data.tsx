@@ -45,6 +45,14 @@ interface StockData {
   sector: string;
 }
 
+interface StockDataShort {
+  id: number;
+  symbol: string;
+  image: string;
+  company_name: string;
+  price: Price;
+}
+
 interface StockListProp {
   heading: string;
   stockData: StockData[];
@@ -1083,4 +1091,5 @@ export type {
   UserStockItem,
   StockListProp,
   WalletProp,
+  StockDataShort,
 };
