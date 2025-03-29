@@ -8,6 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 
 ChartJs.register(
@@ -17,7 +18,8 @@ ChartJs.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 interface StockPriceData {
@@ -47,11 +49,11 @@ function PriceFluctuationChart({ data }: PriceFluctuationChartProps) {
         label: `${data[0]?.symbol} Close Price`,
         data: closePrices,
         borderColor: "rgba(117, 251, 76, 1)",
-        backgroundColor: "rgba(117, 251, 76, 1)",
+        backgroundColor: "rgba(117, 251, 76, 0.2)",
         fill: true,
         tension: 0.3,
-        pointRadius: 3,
-        borderWidth: 2,
+        pointRadius: 1,
+        borderWidth: 1,
       },
     ],
   };

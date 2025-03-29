@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import UserStocksPage from "./pages/sub/UserStocksPage";
+import StockViewPage from "./pages/sub/StockViewPage";
 
 function App() {
   return (
@@ -28,6 +30,14 @@ function App() {
             <Route
               path="market"
               element={<Market />}
+            />
+            <Route
+              path="userstocks"
+              element={<UserStocksPage />}
+            />
+            <Route
+              path="stocks/:stockSymbol"
+              element={<StockViewPage />}
             />
           </Route>
         </Route>

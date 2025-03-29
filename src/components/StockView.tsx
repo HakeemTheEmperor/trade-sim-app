@@ -1,10 +1,21 @@
-import { useState } from "react";
-import numbro from "numbro";
+import { useEffect, useState } from "react";
 import "../index.css";
 import PercentageChange from "./PercentageChange";
 import SecondaryButton from "./SecondaryButton";
 import PriceFluctuationChart from "./PriceFluctuationChart";
-import { chartData, StockIntroProp, companyData } from "../mockData/Data";
+import { StockIntroProp } from "../mockData/Data";
+import { useParams } from "react-router-dom";
+import {
+  fetchStockData,
+  fetchStockPriceHistory,
+  fetchStockQuantity,
+} from "../functions/stockService";
+import {
+  formatMarketCap,
+  shortenDescription,
+  truncateDescription,
+} from "../functions/utils";
+import InactiveButton from "./InactiveButton";
 
 function StockIntro({
   symbol,
@@ -14,17 +25,19 @@ function StockIntro({
   current_price,
 }: StockIntroProp) {
   return (
-    <div className="flex flex-col w-full md:w-1/2 gap-2 drop-shadow-xl py-3 rounded-md mb-2">
-      <img
-        src={image}
-        alt={`${symbol} logo`}
-        className="w-15 h-15 p-1"
-      />
-      <p className="flex flex-col">
-        <span className="font-bold mr-2 text-xl">{symbol}</span>
-        <span>{company_name}</span>
-      </p>
-      <p className="flex gap-4">
+    <div className="flex  w-full gap-3 drop-shadow-xl py-3 rounded-md mb-2">
+      <div className="flex items-center gap-2 w-1/2">
+        <img
+          src={image}
+          alt={`${symbol} logo`}
+          className="w-15 h-15 p-1"
+        />
+        <p className="flex flex-col">
+          <span className="font-bold mr-2 text-xl">{symbol}</span>
+          <span>{company_name}</span>
+        </p>
+      </div>
+      <p className="flex gap-2 w-1/2 h-full items-center justify-center">
         <span className="p-1">${current_price.toFixed(2)}</span>
         <PercentageChange percentage={percentage_change} />
       </p>
@@ -33,24 +46,55 @@ function StockIntro({
 }
 
 function StockView() {
+  const { stockSymbol } = useParams();
   const [isExpanded, setIsExpanded] = useState(false);
-  const sentences = companyData.description
-    .split(/(?<=\.)\s+/)
-    .filter((sentence) => sentence.trim() !== "");
+  const [companyData, setCompanyData] = useState<any>(null);
+  const [chartData, setChartData] = useState<any>(null);
+  const [quantity, setQuantity] = useState<number | null>(null);
   const TRUNCATE_LENGTH = 100;
-  const TRUNCATE_SENTENCES = 3;
-  const truncatedDescription =
-    companyData.description.length > TRUNCATE_LENGTH
-      ? `${companyData.description.slice(0, TRUNCATE_LENGTH)}...`
-      : companyData.description;
-  const shortenedDescription =
-    sentences.length > TRUNCATE_SENTENCES
-      ? sentences.slice(0, TRUNCATE_SENTENCES).join(" ") + "..."
-      : companyData.description;
-  const marketCap = numbro(companyData.market_cap).format({
-    average: true,
-    mantissa: 2,
-  });
+
+  useEffect(() => {
+    if (!stockSymbol) return;
+
+    const fetchData = async () => {
+      try {
+        const data = await fetchStockData(stockSymbol);
+        if (data) setCompanyData(data);
+      } catch (error) {
+        console.error("Error fetching stock data:", error);
+      }
+    };
+
+    const fetchQuantity = async () => {
+      try {
+        const data = await fetchStockQuantity(stockSymbol);
+        if (data) setQuantity(data);
+      } catch (error) {
+        console.error("Error fetching stock data:", error);
+      }
+    };
+
+    const fetchChart = async () => {
+      try {
+        const history = await fetchStockPriceHistory(stockSymbol);
+        if (history) setChartData(history);
+      } catch (error) {
+        console.error("Error fetching chart data:", error);
+      }
+    };
+
+    fetchData();
+    fetchChart();
+    fetchQuantity();
+  }, [stockSymbol]);
+
+  if (!companyData) return <p>Loading company data...</p>;
+  if (!chartData) return <p>Loading chart...</p>;
+  const marketCap = formatMarketCap(companyData.market_cap);
+  const sentence = companyData.description;
+  const shortenedDescription = shortenDescription(sentence);
+  const truncatedDescription = truncateDescription(sentence);
+
   return (
     <div className="flex flex-col main_text">
       <StockIntro
@@ -68,7 +112,7 @@ function StockView() {
           {companyData.description.length > TRUNCATE_LENGTH && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="ml-2 text-blue-400 hover:text-blue-300 focus:outline-none"
+              className="ml-2 text-blue-400 hover:text-blue-300 focus:outline-none cursor-pointer"
             >
               {isExpanded ? "See Less" : "See More"}
             </button>
@@ -89,17 +133,33 @@ function StockView() {
           <p className="text-gray-400">Sector:</p>
           <p className="text-2xl font-bold">{companyData.sector}</p>
         </div>
+        {quantity ? (
+          <div className="flex flex-col mb-4">
+            <p className="text-gray-400">Quantity owned:</p>
+            <p className="text-2xl font-bold">{quantity} units</p>
+          </div>
+        ) : (
+          <p className="text-white italic font-light text-center">
+            You do not have this stock
+          </p>
+        )}
       </div>
-
       <div className="border-t-2 mb-3 pt-4 flex justify-evenly">
         <SecondaryButton
           text="Buy"
           Click={() => console.log("Hello World")}
         />
-        <SecondaryButton
-          text="Sell"
-          Click={() => console.log("Hello World")}
-        />
+        {quantity ? (
+          <SecondaryButton
+            text="Sell"
+            Click={() => console.log("Hello World")}
+          />
+        ) : (
+          <InactiveButton
+            text="Sell"
+            Click={() => console.log("Hello World")}
+          />
+        )}
       </div>
     </div>
   );

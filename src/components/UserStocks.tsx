@@ -1,44 +1,39 @@
 import { useEffect, useState } from "react";
 import { UserStockItem } from "../mockData/Data";
-import AssetItem from "./AssetItem";
 import { fetchUserStock } from "../functions/stockService";
-import { NavLink } from "react-router-dom";
+import UserStock from "./UserStock";
 
-function Assets() {
+function UserStocks() {
   const [userStocks, setUserStocks] = useState<UserStockItem[]>([]);
   useEffect(() => {
     async function getStocks() {
       const stocks = await fetchUserStock();
-      setUserStocks(stocks.slice(0, 4));
+      setUserStocks(stocks);
     }
-
     getStocks();
   }, []);
   return (
-    <div className="text-white my-8">
-      <div className="flex justify-between">
-        <h3 className="text-2xl font-bold p-3">Assets</h3>
-        <NavLink to="/userstocks">
-          <p className=" h-full flex items-center justify-center text-green-600 p-3">
-            view all &rarr;
-          </p>
-        </NavLink>
+    <>
+      <div className="flex justify-center">
+        <h2 className="main_text text-xl p-2 antialiased font-bold">
+          User Stocks
+        </h2>
       </div>
-      <div className="flex gap-6 w-full overflow-x-scroll p-3">
+      <ul className="flex flex-col list-none py-4 gap-2">
         {userStocks.map((stock) => (
-          <AssetItem
+          <UserStock
             key={stock.id}
             id={stock.id}
             symbol={stock.symbol}
             company_name={stock.company_name}
+            price={stock.price}
             image={stock.image}
             quantity={stock.quantity}
-            price={stock.price}
           />
         ))}
-      </div>
-    </div>
+      </ul>
+    </>
   );
 }
 
-export default Assets;
+export default UserStocks;
