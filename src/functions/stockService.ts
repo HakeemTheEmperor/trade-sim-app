@@ -202,6 +202,29 @@ const stockSearch = async (query: string, searchType: string) => {
   }
 };
 
+const fetchAllStocks = async (
+  pageNumber: number,
+  sort: string,
+  sortOrder: string
+) => {
+  const token = localStorage.getItem("token");
+  const url = `${BASE_URL}/stocks/all?sort=${sortOrder}&page=${pageNumber}&limit=10&sort_by=${sort}`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": API_KEY,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = await response.json();
+  if (response.ok && result.data) {
+    return result.data;
+  } else {
+    throw result;
+  }
+};
+
 export {
   fetchUserStock,
   fetchPortfolio,
@@ -211,4 +234,5 @@ export {
   buyStockUser,
   sellStockUser,
   stockSearch,
+  fetchAllStocks,
 };

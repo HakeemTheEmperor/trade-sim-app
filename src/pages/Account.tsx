@@ -1,7 +1,7 @@
 import Profile from "../components/Profile";
 import Settings from "../components/Settings";
 
-function TestPage() {
+function Account() {
   return (
     <>
       <Profile />
@@ -10,4 +10,4 @@ function TestPage() {
   );
 }
 
-export default TestPage;
+export default Account;

@@ -106,7 +106,7 @@ function SearchBar() {
             searchResults.map((result, index) => (
               <Link
                 key={index}
-                to={`/stocks/${result.symbol}`}
+                to={`/market/stock/${result.symbol}`}
               >
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   {searchType === "symbol"

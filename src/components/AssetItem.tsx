@@ -10,7 +10,7 @@ function AssetItem({
   symbol,
 }: UserStockItem) {
   return (
-    <Link to={`/stocks/${symbol}`}>
+    <Link to={`/market/stock/${symbol}`}>
       <div className="min-w-50 p-3 min-h-50 rounded-xl bg-gray-600 flex justify-between">
         <div>
           <div className="flex gap-2 items-center mb-5">

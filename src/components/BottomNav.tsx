@@ -7,7 +7,10 @@ function BottomNav() {
   return (
     <div className="fixed bottom-0 left-0 w-full p-3 z-10 bg-white rounded-md shadow-md">
       <ul className="flex justify-around">
-        <NavLink to="/">
+        <NavLink
+          to="/portfolio"
+          className={({ isActive }) => (isActive ? "text-green-600" : "")}
+        >
           <li className="flex flex-col justify-center items-center">
             <MdHome
               className="w-full"
@@ -16,7 +19,10 @@ function BottomNav() {
             <span className="font-semibold">Portfolio</span>
           </li>
         </NavLink>
-        <NavLink to="/learn">
+        <NavLink
+          to="/learn"
+          className={({ isActive }) => (isActive ? "text-green-600" : "")}
+        >
           <li className="flex flex-col justify-center items-center">
             <FaBookmark
               className="w-full"
@@ -25,7 +31,10 @@ function BottomNav() {
             <span className="font-semibold">Learn</span>
           </li>
         </NavLink>
-        <NavLink to="/market">
+        <NavLink
+          to="/market"
+          className={({ isActive }) => (isActive ? "text-green-600" : "")}
+        >
           <li className="flex flex-col justify-center items-center">
             <LuChartNoAxesCombined
               className="w-full"
@@ -34,13 +43,18 @@ function BottomNav() {
             <span className="font-semibold">Market</span>
           </li>
         </NavLink>
-        <li className="flex flex-col justify-center items-center">
-          <FaUser
-            className="w-full"
-            size={20}
-          />
-          <span className="font-semibold">Account</span>
-        </li>
+        <NavLink
+          to="/account"
+          className={({ isActive }) => (isActive ? "text-green-600" : "")}
+        >
+          <li className="flex flex-col justify-center items-center">
+            <FaUser
+              className="w-full"
+              size={20}
+            />
+            <span className="font-semibold">Account</span>
+          </li>
+        </NavLink>
       </ul>
     </div>
   );

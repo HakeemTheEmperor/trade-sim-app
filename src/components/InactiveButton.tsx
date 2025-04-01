@@ -1,6 +1,5 @@
 interface InactiveButtonProps {
   text: string;
-  Click: () => void;
 }
 
 function InactiveButton({ text }: InactiveButtonProps) {

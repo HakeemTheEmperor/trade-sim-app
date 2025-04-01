@@ -51,7 +51,7 @@ function SignUp() {
 
     try {
       await handleSignUp(formData);
-      window.location.href = "/";
+      window.location.href = "/portfolio";
     } catch (error: any) {
       if (error?.message) {
         setErrors({ general: error.message });

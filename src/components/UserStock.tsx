@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function UserStock({ image, price, quantity, symbol }: UserStockItem) {
   const displayQuantity = formatNumber(quantity);
   return (
-    <Link to={`/stocks/${symbol}`}>
+    <Link to={`/market/stock/${symbol}`}>
       <div className="w-full py-4 px-2 border-white bg-gray-600 rounded-2xl text-white shadow border-1 flex items-center justify-between">
         <div className="flex items-center gap-3 md:gap-3 w-1/3">
           <img

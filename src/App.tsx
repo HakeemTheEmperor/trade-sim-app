@@ -11,6 +11,12 @@ import UserStocksPage from "./pages/sub/UserStocksPage";
 import StockViewPage from "./pages/sub/StockViewPage";
 import BuyStockPage from "./pages/sub/BuyStockPage";
 import SellStockPage from "./pages/sub/SellStockPage";
+import TestPage from "./pages/TestPage";
+import AllStocksPage from "./pages/sub/AllStocksPage";
+import TransactionHistoryPage from "./pages/sub/TransactionHistoryPage";
+import TransactionViewPage from "./pages/sub/TransactionViewPage";
+import LandingPage from "./pages/LandingPage";
+import Account from "./pages/Account";
 
 function App() {
   return (
@@ -22,31 +28,51 @@ function App() {
             element={<Layout />}
           >
             <Route
-              index
+              path="portfolio"
               element={<Home />}
+            />
+            <Route
+              path="portfolio/transactions/all"
+              element={<TransactionHistoryPage />}
+            />
+            <Route
+              path="portfolio/transaction/:transactionId"
+              element={<TransactionViewPage />}
+            />
+            <Route
+              path="portfolio/userstocks"
+              element={<UserStocksPage />}
             />
             <Route
               path="learn"
               element={<LearnPage />}
             />
             <Route
+              path="account"
+              element={<Account />}
+            />
+            <Route
+              path="test"
+              element={<TestPage />}
+            />
+            <Route
               path="market"
               element={<Market />}
             />
             <Route
-              path="userstocks"
-              element={<UserStocksPage />}
+              path="stocks/all"
+              element={<AllStocksPage />}
             />
             <Route
-              path="buy/:stockSymbol"
+              path="market/buy/:stockSymbol"
               element={<BuyStockPage />}
             />
             <Route
-              path="sell/:stockSymbol"
+              path="market/sell/:stockSymbol"
               element={<SellStockPage />}
             />
             <Route
-              path="stocks/:stockSymbol"
+              path="market/stock/:stockSymbol"
               element={<StockViewPage />}
             />
           </Route>
@@ -58,6 +84,10 @@ function App() {
         <Route
           path="/login"
           element={<LoginPage />}
+        />
+        <Route
+          path="/welcome"
+          element={<LandingPage />}
         />
       </Routes>
     </BrowserRouter>

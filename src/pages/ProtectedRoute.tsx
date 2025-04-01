@@ -7,7 +7,7 @@ function ProtectedRoute() {
   if (!token) {
     return (
       <Navigate
-        to="/login"
+        to="/welcome"
         replace
       />
     );
@@ -18,11 +18,12 @@ function ProtectedRoute() {
     const isTokenExpired = decodedToken.exp * 1000 < Date.now();
 
     if (isTokenExpired) {
+      console.log("Expired");
       localStorage.removeItem("token"); // Clear invalid token
       localStorage.removeItem("user");
       return (
         <Navigate
-          to="/login"
+          to="/welcome"
           replace
         />
       );
@@ -33,7 +34,7 @@ function ProtectedRoute() {
     localStorage.removeItem("user");
     return (
       <Navigate
-        to="/login"
+        to="/welcome"
         replace
       />
     );

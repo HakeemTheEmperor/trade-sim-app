@@ -57,7 +57,7 @@ function SellStock() {
       const response = await sellStockUser(requestBody);
       setMessage(response.message);
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/portfolio";
       }, 5000);
     } catch (error: any) {
       setError(error.message);

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PercentageChange from "./PercentageChange";
 
-interface StockItemProps {
+interface TopStockProps {
   symbol: string;
   companyName: string;
   currentPrice: number;
@@ -9,16 +9,16 @@ interface StockItemProps {
   logo: string;
 }
 
-function StockItem({
+function TopStock({
   symbol,
   companyName,
   currentPrice,
   percentageChange,
   logo,
-}: StockItemProps) {
+}: TopStockProps) {
   return (
     <Link to={`/market/stock/${symbol}`}>
-      <li className="flex justify-between w-full mb-2 transparent_light rounded-md p-4 main_text shadow">
+      <li className="min-w-50 p-3 min-h-50 rounded-xl transparent_light text-white flex flex-col justify-around items-center">
         <div className="flex">
           <img
             src={logo}
@@ -30,7 +30,7 @@ function StockItem({
             <span className="text-gray-300">{symbol}</span>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex items-center gap-4">
           <span>${currentPrice.toFixed(2)}</span>
           <PercentageChange percentage={percentageChange} />
         </div>
@@ -39,4 +39,4 @@ function StockItem({
   );
 }
 
-export default StockItem;
+export default TopStock;

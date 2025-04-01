@@ -21,7 +21,7 @@ function BuyStock() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const sellStock = async () => {
+  const buyStock = async () => {
     setError(null);
 
     if (!selectedWallet) {
@@ -48,7 +48,7 @@ function BuyStock() {
       const response = await buyStockUser(requestBody);
       setMessage(response.message);
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/portfolio";
       }, 5000);
     } catch (error: any) {
       setError(error.message);
@@ -79,7 +79,7 @@ function BuyStock() {
         const wallets = await fetchUserWallets();
         if (wallets) setWallets(wallets);
       } catch (error) {
-        console.error("Error fetching stock quantity: ", error);
+        console.error("Error fetching wallets: ", error);
       }
     };
 
@@ -174,7 +174,7 @@ function BuyStock() {
         )}
         <MainButton
           text="Buy"
-          Click={() => sellStock()}
+          Click={() => buyStock()}
         />
       </div>
     </div>

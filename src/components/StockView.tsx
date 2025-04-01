@@ -16,6 +16,12 @@ import {
   truncateDescription,
 } from "../functions/utils";
 import InactiveButton from "./InactiveButton";
+import MainButton from "./MainButton";
+import {
+  addToWatchlist,
+  isInWatchlist,
+  removeFromWatchlist,
+} from "../functions/watchlistService";
 
 function StockIntro({
   symbol,
@@ -52,17 +58,52 @@ function StockView() {
   const [companyData, setCompanyData] = useState<any>(null);
   const [chartData, setChartData] = useState<any>(null);
   const [quantity, setQuantity] = useState<number | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [inWatchlist, setInWatchlist] = useState(false);
   const TRUNCATE_LENGTH = 100;
 
   const handleBuy = async () => {
     if (stockSymbol) {
-      navigate(`/buy/${stockSymbol}`);
+      navigate(`/market/buy/${stockSymbol}`);
+    }
+  };
+
+  const handleAdd = async () => {
+    setError(null);
+    setMessage(null);
+    if (!stockSymbol) {
+      setError("Stock symbol is missing.");
+      return;
+    }
+    try {
+      const sy = await addToWatchlist(stockSymbol);
+      setMessage(sy);
+      setInWatchlist(true);
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
+
+  const handleRemove = async () => {
+    setError(null);
+    setMessage(null);
+    if (!stockSymbol) {
+      setError("Stock symbol is missing.");
+      return;
+    }
+    try {
+      const sy = await removeFromWatchlist(stockSymbol);
+      setMessage(sy);
+      setInWatchlist(false);
+    } catch (error: any) {
+      setError(error.message);
     }
   };
 
   const handleSell = async () => {
     if (stockSymbol) {
-      navigate(`/sell/${stockSymbol}`);
+      navigate(`/market/sell/${stockSymbol}`);
     }
   };
 
@@ -73,6 +114,15 @@ function StockView() {
       try {
         const data = await fetchStockData(stockSymbol);
         if (data) setCompanyData(data);
+      } catch (error) {
+        console.error("Error fetching stock data:", error);
+      }
+    };
+
+    const fetchWatchlistStatus = async () => {
+      try {
+        const data = await isInWatchlist(stockSymbol);
+        setInWatchlist(data);
       } catch (error) {
         console.error("Error fetching stock data:", error);
       }
@@ -99,10 +149,12 @@ function StockView() {
     fetchData();
     fetchChart();
     fetchQuantity();
+    fetchWatchlistStatus();
   }, [stockSymbol]);
 
   if (!companyData) return <p>Loading company data...</p>;
   if (!chartData) return <p>Loading chart...</p>;
+  if (error) return <p className="text-red-600">{error}</p>;
   const marketCap = formatMarketCap(companyData.market_cap);
   const sentence = companyData.description;
   const shortenedDescription = shortenDescription(sentence);
@@ -156,6 +208,18 @@ function StockView() {
             You do not have this stock
           </p>
         )}
+        {inWatchlist ? (
+          <MainButton
+            text="Remove from Watchlist"
+            Click={handleRemove}
+          />
+        ) : (
+          <MainButton
+            text="Add to watchlist"
+            Click={handleAdd}
+          />
+        )}
+        {message && <p className="text-white text-center">{message}</p>}
       </div>
       <div className="border-t-2 mb-3 pt-4 flex justify-evenly">
         <SecondaryButton
@@ -168,10 +232,7 @@ function StockView() {
             Click={handleSell}
           />
         ) : (
-          <InactiveButton
-            text="Sell"
-            Click={() => console.log("Hello World")}
-          />
+          <InactiveButton text="Sell" />
         )}
       </div>
     </div>

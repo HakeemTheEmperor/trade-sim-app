@@ -23,7 +23,7 @@ export async function handleSignUp(credentials: {
   }
 
   localStorage.setItem("token", data.token);
-  localStorage.setItem("user", data.user);
+  localStorage.setItem("user", JSON.stringify(data.user));
 
   return data;
 }
@@ -50,4 +50,24 @@ export async function handleLogin(credentials: {
   localStorage.setItem("user", JSON.stringify(data.user));
 
   return data;
+}
+
+export async function logout() {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${BASE_URL}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": API_KEY,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = await response.json();
+  if (response.ok) {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.href = "/welcome";
+  } else {
+    throw result;
+  }
 }

@@ -3,6 +3,7 @@ import "../index.css";
 
 function TopNav() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  console.log(user);
   return (
     <div className="top-0 w-full p-3 z-10 rounded-xl shadow-md ">
       <div className="flex justify-between items-center">

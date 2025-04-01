@@ -37,7 +37,7 @@ function SignIn() {
 
     try {
       await handleLogin(formData);
-      window.location.href = "/";
+      window.location.href = "/portfolio";
     } catch (error: any) {
       if (error?.message) {
         console.log(error);

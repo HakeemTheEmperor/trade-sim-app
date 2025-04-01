@@ -1,17 +1,13 @@
 import Assets from "../components/Assets";
 import Portfolio from "../components/Portfolio";
-import StockList from "../components/StockList";
-import { stockData } from "../mockData/Data";
+import Transactions from "../components/Transactions";
 
 function Home() {
   return (
     <>
       <Portfolio />
       <Assets />
-      <StockList
-        heading="Watchlist"
-        stockData={stockData.slice(0, 4)}
-      />
+      <Transactions />
     </>
   );
 }

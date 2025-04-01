@@ -1,16 +1,16 @@
-import StockItem from "./StockItem";
-import { StockDataShort, StockListProp } from "../mockData/Data";
 import { useEffect, useState } from "react";
+import { StockDataShort } from "../mockData/Data";
 import { fetchAllStocks } from "../functions/stockService";
-import { Link } from "react-router-dom";
+import TopStock from "./TopStock";
 
-function StockList({ heading }: StockListProp) {
+function TopStocks() {
   const [data, setData] = useState<StockDataShort[]>([]);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchStocks = async () => {
       try {
-        const result = await fetchAllStocks(1, "symbol", "asc");
+        const result = await fetchAllStocks(1, "price", "desc");
         const cutData = result.stocks.slice(0, 4);
         setData(cutData);
       } catch (error: any) {
@@ -19,21 +19,17 @@ function StockList({ heading }: StockListProp) {
     };
     fetchStocks();
   }, []);
-  if (!data) return <p className="text-white">Loading...</p>;
+
   if (error) return <p className="text-red-600">{error}</p>;
   return (
-    <>
-      <div className="flex justify-between">
-        <h2 className="main_text text-xl p-2 antialiased font-bold">
-          {heading}
-        </h2>
-        <Link to={`/stocks/all`}>
-          <p className="text-green-600 p-2">view all &rarr;</p>
-        </Link>
+    <div className="my-2">
+      <div className="text-white flex flex-col justify-center items-center">
+        <h2 className="text-center text-2xl font-bold">Our Top Stocks</h2>
+        <p className="italic text-lg">Our top picks for the week</p>
       </div>
-      <ul className="flex flex-col list-none py-4">
+      <ul className="flex overflow-scroll gap-3 list-none py-4">
         {data.map((stock) => (
-          <StockItem
+          <TopStock
             key={stock.id}
             symbol={stock.symbol}
             companyName={stock.company_name}
@@ -43,8 +39,8 @@ function StockList({ heading }: StockListProp) {
           />
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
-export default StockList;
+export default TopStocks;

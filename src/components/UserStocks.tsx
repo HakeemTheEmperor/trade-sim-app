@@ -12,6 +12,7 @@ function UserStocks() {
     }
     getStocks();
   }, []);
+  console.log(userStocks);
   return (
     <>
       <div className="flex justify-center">
@@ -19,19 +20,25 @@ function UserStocks() {
           User Stocks
         </h2>
       </div>
-      <ul className="flex flex-col list-none py-4 gap-2">
-        {userStocks.map((stock) => (
-          <UserStock
-            key={stock.id}
-            id={stock.id}
-            symbol={stock.symbol}
-            company_name={stock.company_name}
-            price={stock.price}
-            image={stock.image}
-            quantity={stock.quantity}
-          />
-        ))}
-      </ul>
+      {userStocks.length > 0 ? (
+        <ul className="flex flex-col list-none py-4 gap-2">
+          {userStocks.map((stock) => (
+            <UserStock
+              key={stock.id}
+              id={stock.id}
+              symbol={stock.symbol}
+              company_name={stock.company_name}
+              price={stock.price}
+              image={stock.image}
+              quantity={stock.quantity}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className="italic text-white py-4">
+          You have not purchased any stock yet.
+        </p>
+      )}
     </>
   );
 }
