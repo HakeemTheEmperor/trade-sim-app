@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { FaRegUser, FaLock } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { FiSettings, FiLogOut } from "react-icons/fi";
