@@ -17,6 +17,7 @@ import TransactionHistoryPage from "./pages/sub/TransactionHistoryPage";
 import TransactionViewPage from "./pages/sub/TransactionViewPage";
 import LandingPage from "./pages/LandingPage";
 import Account from "./pages/Account";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -88,6 +89,10 @@ function App() {
         <Route
           path="/welcome"
           element={<LandingPage />}
+        />
+        <Route
+          path="*"
+          element={<NotFound />}
         />
       </Routes>
     </BrowserRouter>
