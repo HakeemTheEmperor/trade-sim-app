@@ -23,6 +23,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path="/"
+          element={<LandingPage />}
+        />
+        <Route
+          path="/welcome"
+          element={<LandingPage />}
+        />
         <Route element={<ProtectedRoute />}>
           <Route
             path="/"
@@ -85,10 +93,6 @@ function App() {
         <Route
           path="/login"
           element={<LoginPage />}
-        />
-        <Route
-          path="/welcome"
-          element={<LandingPage />}
         />
         <Route
           path="*"
