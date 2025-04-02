@@ -32,6 +32,7 @@ export async function handleLogin(credentials: {
   email: string;
   password: string;
 }) {
+  console.log(BASE_URL);
   const response = await fetch(`${BASE_URL}/auth/signin`, {
     method: "POST",
     headers: {
