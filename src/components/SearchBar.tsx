@@ -70,6 +70,7 @@ function SearchBar() {
           onClick={() => setShowFilters(!showFilters)}
         />
       </div>
+      {error && <p className="text-red-600">{error}</p>}
 
       {/* Filter Dropdown */}
       {showFilters && (
