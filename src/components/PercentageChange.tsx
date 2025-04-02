@@ -13,7 +13,7 @@ function PercentageChange({ percentage }: PercentageChangeProps) {
       : "text-gray-700 bg-gray-300";
   return (
     <span className={`${changeColor} text-center p-1 rounded-xl`}>
-      {isNaN(numPercentage) ? "0.00%" : numPercentage.toFixed(2) + "%"}
+      {isNaN(numPercentage) ? "0.00%" : numPercentage.toFixed(3) + "%"}
     </span>
   );
 }
