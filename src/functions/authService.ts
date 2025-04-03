@@ -73,3 +73,29 @@ export async function logout() {
     throw result;
   }
 }
+
+export async function handlePasswordChange(credentials: {
+  old_password: string;
+  new_password: string;
+}) {
+  const token = localStorage.getItem("token");
+  const url = `${BASE_URL}/auth/reset-password`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": API_KEY,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(credentials),
+  });
+  const result = await response.json();
+  if (response.ok) {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.href = "/welcome";
+    alert("Password changed successfully");
+  } else {
+    throw result;
+  }
+}

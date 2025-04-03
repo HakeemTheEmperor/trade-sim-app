@@ -18,6 +18,8 @@ import TransactionViewPage from "./pages/sub/TransactionViewPage";
 import LandingPage from "./pages/LandingPage";
 import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
+import ProfileSettingPage from "./pages/sub/ProfileSettingPage";
+import SecurityPage from "./pages/sub/SecurityPage";
 
 function App() {
   return (
@@ -92,6 +94,14 @@ function App() {
             <Route
               path="account"
               element={<Account />}
+            />
+            <Route
+              path="account/profile"
+              element={<ProfileSettingPage />}
+            />
+            <Route
+              path="account/security"
+              element={<SecurityPage />}
             />
           </Route>
         </Route>

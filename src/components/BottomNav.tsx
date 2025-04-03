@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 function BottomNav() {
   return (
-    <div className="fixed bottom-0 left-0 w-full p-3 z-10 bg-white rounded-md shadow-md">
+    <div className="fixed bottom-0 left-0 w-full p-3 z-50 bg-white rounded-md shadow-md">
       <ul className="flex justify-around">
         <NavLink
           to="/portfolio"

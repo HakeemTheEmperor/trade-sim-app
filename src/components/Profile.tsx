@@ -1,5 +1,6 @@
 function ProfileIntro() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  console.log(user);
   return (
     <div className="flex flex-col items-center justify-center gap-10">
       <div>

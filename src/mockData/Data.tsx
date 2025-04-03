@@ -5,6 +5,19 @@ interface ChartData {
   cp: string;
 }
 
+interface UserData {
+  created_at: string;
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  phone_number: string | null; // Can be a string or null
+  role: string; // You could make this an enum if the values are fixed (e.g., "USER", "ADMIN")
+  updated_at: string;
+  username: string;
+  wallets: WalletProp[];
+}
+
 interface StockIntroProp {
   symbol: string;
   image: string;
@@ -106,4 +119,5 @@ export type {
   TransactionHistory,
   TransactionDetailProp,
   WatchListData,
+  UserData,
 };

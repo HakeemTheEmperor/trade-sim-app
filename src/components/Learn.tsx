@@ -10,7 +10,7 @@ function Learn() {
     <div className="flex flex-col mt-3">
       <div>
         <h3 className="text-2xl text-white font-bold mt-4">Learn</h3>
-        <p className="text-gray-400 text-start w-full sm:w-3/5">
+        <p className="text-gray-400 text-start w-full">
           Don't worry, we've got your back with some awesome resources to help
           you learn and grow!!!
         </p>
