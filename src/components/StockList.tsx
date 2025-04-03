@@ -27,7 +27,7 @@ function StockList({ heading }: StockListProp) {
         <h2 className="main_text text-xl p-2 antialiased font-bold">
           {heading}
         </h2>
-        <Link to={`/stocks/all`}>
+        <Link to={`/market/stocks/all`}>
           <p className="text-green-600 p-2">view all &rarr;</p>
         </Link>
       </div>

@@ -64,10 +64,7 @@ function App() {
               path="learn"
               element={<LearnPage />}
             />
-            <Route
-              path="account"
-              element={<Account />}
-            />
+
             <Route
               path="test"
               element={<TestPage />}
@@ -77,7 +74,7 @@ function App() {
               element={<Market />}
             />
             <Route
-              path="stocks/all"
+              path="market/stocks/all"
               element={<AllStocksPage />}
             />
             <Route
@@ -91,6 +88,10 @@ function App() {
             <Route
               path="market/stock/:stockSymbol"
               element={<StockViewPage />}
+            />
+            <Route
+              path="account"
+              element={<Account />}
             />
           </Route>
         </Route>
