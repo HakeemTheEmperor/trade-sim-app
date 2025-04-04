@@ -49,7 +49,7 @@ function BuyStock() {
       setMessage(response.message);
       setTimeout(() => {
         window.location.href = "/portfolio";
-      }, 5000);
+      }, 3000);
     } catch (error: any) {
       setError(error.message);
     }
@@ -105,8 +105,8 @@ function BuyStock() {
           </div>
         )}
         <select
-          className="block w-64
-           p-2 mt-2 border rounded-md bg-green-600  text-white"
+          className="block w-full md:w-64
+           p-2 mt-2 border rounded-md bg-green-600  text-white text-center"
           value={selectedWallet ? selectedWallet.id : ""}
           onChange={(e) => {
             const selectedId = parseInt(e.target.value, 10);
@@ -127,6 +127,7 @@ function BuyStock() {
               <option
                 key={wallet.id}
                 value={wallet.id}
+                className="w-11/12"
               >
                 {wallet.currency} - ${wallet.balance.toFixed(2)}
               </option>

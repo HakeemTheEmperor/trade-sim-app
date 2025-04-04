@@ -53,8 +53,8 @@ function Transactions() {
       </div>
       <div className="flex justify-end">
         <select
-          className="block w-64
-           p-2 mt-2 border rounded-md bg-green-600  text-white"
+          className="block w-full md:w-64
+           p-2 mt-2 border rounded-md bg-green-600  text-white text-center"
           value={selectedWallet ? selectedWallet.id : ""}
           onChange={(e) => {
             const selectedId = parseInt(e.target.value, 10);
