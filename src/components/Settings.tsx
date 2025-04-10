@@ -28,7 +28,7 @@ function Settings() {
             <span className="text-green-600 text-xl">&gt;</span>
           </li>
         </Link>
-        <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-not-allowed">
+        {/*         <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-not-allowed">
           <div className="flex gap-10 items-center text-md">
             <MdOutlinePayment
               className="text-green-600"
@@ -37,7 +37,7 @@ function Settings() {
             <span>Payment Method</span>
           </div>
           <span className="text-green-600 text-xl">&gt;</span>
-        </li>
+        </li> */}
         <Link to={"/account/security"}>
           <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-pointer">
             <div className="flex gap-10 items-center text-md">
@@ -50,7 +50,7 @@ function Settings() {
             <span className="text-green-600 text-xl">&gt;</span>
           </li>
         </Link>
-        <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-not-allowed">
+        {/*         <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-not-allowed">
           <div className="flex gap-10 items-center text-md">
             <FiSettings
               className="text-green-600"
@@ -59,7 +59,7 @@ function Settings() {
             <span>Help and Settings</span>
           </div>
           <span className="text-green-600 text-xl">&gt;</span>
-        </li>
+        </li> */}
         <li
           className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-pointer"
           onClick={handleLogout}
