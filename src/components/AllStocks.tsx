@@ -17,7 +17,7 @@ function AllStocks({ heading }: AllStocksProp) {
   const [error, setError] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [sortOrder, setSortOrder] = useState("desc");
-  const [sortBy, setSortBy] = useState("symbol");
+  const [sortBy, setSortBy] = useState("price");
 
   useEffect(() => {
     if (!page) return;

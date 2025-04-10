@@ -30,7 +30,7 @@ function App() {
           path="/"
           element={
             <Navigate
-              to="/welcome"
+              to="/portfolio"
               replace
             />
           }

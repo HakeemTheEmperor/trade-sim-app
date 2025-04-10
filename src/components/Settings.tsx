@@ -1,6 +1,5 @@
 import { FaRegUser, FaLock } from "react-icons/fa";
-import { MdOutlinePayment } from "react-icons/md";
-import { FiSettings, FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { logout } from "../functions/authService";
 import { Link } from "react-router-dom";
 
