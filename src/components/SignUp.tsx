@@ -147,6 +147,15 @@ function SignUp() {
               text="Create"
               Click={(e) => handleSubmit(e)}
             />
+            <p className="text-gray-400 text-sm text-right mt-3">
+              Already have an account?{" "}
+              <a
+                href="/login"
+                className="text-green-500"
+              >
+                Log In
+              </a>
+            </p>
           </form>
         </div>
       </div>

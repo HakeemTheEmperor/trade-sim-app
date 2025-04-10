@@ -14,6 +14,11 @@ function Landing() {
       className="w-full flex min-h-screen flex-col justify-around items-center
      text-white px-5"
     >
+      <img
+        src="/IMockMarket.png"
+        alt="logo"
+        className="w-40 h-40"
+      />
       <div className="text-4xl font-bold flex flex-col gap-5 md:items-center">
         <p>Join the Trading Community.</p>
         <p>Start Investing Today</p>

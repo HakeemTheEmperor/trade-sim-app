@@ -88,6 +88,16 @@ function SignIn() {
               text="Signin"
               Click={(e) => handleSubmit(e)}
             />
+
+            <p className="text-gray-400 text-sm text-right mt-3">
+              Don't have an account?{" "}
+              <a
+                href="/signup"
+                className="text-green-500"
+              >
+                Sign up
+              </a>
+            </p>
           </form>
         </div>
       </div>
