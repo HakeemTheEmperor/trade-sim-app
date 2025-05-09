@@ -13,7 +13,6 @@ const fetchUserStock = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     const data = await response.json();
 
     if (!response.ok) {

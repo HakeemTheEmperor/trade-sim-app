@@ -19,7 +19,7 @@ function Landing() {
         alt="logo"
         className="w-40 h-40"
       />
-      <div className="text-4xl font-bold flex flex-col gap-5 md:items-center">
+      <div className="text-4xl font-bold flex flex-col gap-5 items-center">
         <p>Join the Trading Community.</p>
         <p>Start Investing Today</p>
       </div>
