@@ -1,17 +1,8 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { apiFetch } from "./apiClient";
 
 const fetchUserWallets = async () => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${BASE_URL}/wallet/all`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await apiFetch(`/wallet/all`, { method: "GET" });
     const result = await response.json();
     if (response.ok && result.wallets) {
       return result.wallets;

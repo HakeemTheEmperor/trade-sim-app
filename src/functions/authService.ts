@@ -1,5 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { apiFetch } from "./apiClient";
+import { clearSession, setStoredUser } from "./authToken";
 
 export async function handleSignUp(credentials: {
   email: string;
@@ -8,12 +8,9 @@ export async function handleSignUp(credentials: {
   last_name: string;
   username: string;
 }) {
-  const response = await fetch(`${BASE_URL}/auth/signup`, {
+  const response = await apiFetch(`/auth/signup`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-    },
+    auth: false,
     body: JSON.stringify(credentials),
   });
 
@@ -22,8 +19,9 @@ export async function handleSignUp(credentials: {
     throw data;
   }
 
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
+  // The token is set by the server as an HttpOnly cookie; we only cache the
+  // non-sensitive user profile for UI.
+  setStoredUser(data.user);
 
   return data;
 }
@@ -32,42 +30,39 @@ export async function handleLogin(credentials: {
   email: string;
   password: string;
 }) {
-  console.log(BASE_URL);
-  const response = await fetch(`${BASE_URL}/auth/signin`, {
+  const response = await apiFetch(`/auth/signin`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-    },
+    auth: false,
     body: JSON.stringify(credentials),
   });
 
   const data = await response.json();
-  console.log(data);
   if (!response.ok) {
     throw data;
   }
 
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
+  setStoredUser(data.user);
 
   return data;
 }
 
+// Confirms the session (HttpOnly cookie) is still valid and returns the current
+// user, or null if not authenticated. auth:false so the 401 probe doesn't
+// trigger the global redirect — callers decide what to do.
+export async function fetchCurrentUser() {
+  const response = await apiFetch(`/auth/me`, { method: "GET", auth: false });
+  if (!response.ok) {
+    return null;
+  }
+  const data = await response.json();
+  return data.user ?? null;
+}
+
 export async function logout() {
-  const token = localStorage.getItem("token");
-  const response = await fetch(`${BASE_URL}/auth/logout`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await apiFetch(`/auth/logout`, { method: "POST" });
   const result = await response.json();
   if (response.ok) {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    clearSession();
     window.location.href = "/welcome";
   } else {
     throw result;
@@ -78,21 +73,13 @@ export async function handlePasswordChange(credentials: {
   old_password: string;
   new_password: string;
 }) {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/auth/reset-password`;
-  const response = await fetch(url, {
+  const response = await apiFetch(`/auth/reset-password`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(credentials),
   });
   const result = await response.json();
   if (response.ok) {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    clearSession();
     window.location.href = "/welcome";
     alert("Password changed successfully");
   } else {

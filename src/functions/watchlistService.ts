@@ -1,17 +1,7 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { apiFetch } from "./apiClient";
 
 const fetchWatchlist = async () => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/watchlist/get`;
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await apiFetch(`/watchlist/get`, { method: "GET" });
   const result = await response.json();
   if (response.ok && result.data) {
     return result.data;
@@ -21,15 +11,8 @@ const fetchWatchlist = async () => {
 };
 
 const addToWatchlist = async (symbol: string) => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/watchlist/add/${symbol}`;
-  const response = await fetch(url, {
+  const response = await apiFetch(`/watchlist/add/${symbol}`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
   });
   const result = await response.json();
   if (response.ok) {
@@ -40,15 +23,8 @@ const addToWatchlist = async (symbol: string) => {
 };
 
 const removeFromWatchlist = async (symbol: string) => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/watchlist/delete/${symbol}`;
-  const response = await fetch(url, {
+  const response = await apiFetch(`/watchlist/delete/${symbol}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
   });
   const result = await response.json();
   if (response.ok) {
@@ -59,15 +35,8 @@ const removeFromWatchlist = async (symbol: string) => {
 };
 
 const isInWatchlist = async (symbol: string) => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/watchlist/check/${symbol}`;
-  const response = await fetch(url, {
+  const response = await apiFetch(`/watchlist/check/${symbol}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
   });
   const result = await response.json();
   if (response.ok) {
