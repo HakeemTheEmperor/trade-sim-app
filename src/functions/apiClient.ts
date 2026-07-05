@@ -1,9 +1,6 @@
 import { clearSession, getToken } from "./authToken";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-// NOTE: this key is bundled into the client and is therefore public. It is a
-// coarse gate enforced by the backend, not a secret (see README / .env.example).
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 const LOGIN_REDIRECT = "/welcome";
 
@@ -26,7 +23,6 @@ export async function apiFetch(
 
   const finalHeaders: Record<string, string> = {
     "Content-Type": "application/json",
-    "x-api-key": API_KEY,
     ...(headers as Record<string, string> | undefined),
   };
 
