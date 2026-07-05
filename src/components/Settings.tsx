@@ -8,7 +8,7 @@ function Settings() {
     try {
       await logout();
     } catch (error: any) {
-      console.log(error.message);
+      console.error("Logout failed:", error?.message);
     }
   };
   return (

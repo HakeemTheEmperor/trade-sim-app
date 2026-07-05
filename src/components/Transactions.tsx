@@ -42,7 +42,6 @@ function Transactions() {
   if (!wallets) return <p className="text-white">Loading wallets...</p>;
   if (!history) return <p className="text-white">Loading history...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
-  console.log(history);
   return (
     <div className="flex flex-col text-white">
       <div className="flex justify-between items-center w-full my-2">

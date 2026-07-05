@@ -1,17 +1,7 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { apiFetch } from "./apiClient";
 
 const fetchUserById = async () => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/users/user`;
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await apiFetch(`/users/user`, { method: "GET" });
   const result = await response.json();
   if (response.ok && result.data) {
     return result.data;
@@ -26,15 +16,8 @@ const handleEdit = async (credentials: {
   username: string;
   phone_number: string;
 }) => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/users/user/edit`;
-  const response = await fetch(url, {
+  const response = await apiFetch(`/users/user/edit`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(credentials),
   });
   const result = await response.json();

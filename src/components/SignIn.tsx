@@ -40,7 +40,6 @@ function SignIn() {
       window.location.href = "/portfolio";
     } catch (error: any) {
       if (error?.message) {
-        console.log(error);
         setErrors({ general: error.message });
       } else {
         setErrors({ message: error });

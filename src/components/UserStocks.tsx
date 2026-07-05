@@ -12,7 +12,6 @@ function UserStocks() {
     }
     getStocks();
   }, []);
-  console.log(userStocks);
   return (
     <>
       <div className="flex justify-center">

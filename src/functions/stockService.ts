@@ -1,18 +1,8 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { apiFetch } from "./apiClient";
 
 const fetchUserStock = async () => {
   try {
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${BASE_URL}/stocks/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await apiFetch(`/stocks/user`, { method: "GET" });
     const data = await response.json();
 
     if (!response.ok) {
@@ -28,15 +18,7 @@ const fetchUserStock = async () => {
 
 const fetchPortfolio = async () => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${BASE_URL}/stocks/portfolio`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await apiFetch(`/stocks/portfolio`, { method: "GET" });
     const result = await response.json();
     if (response.ok && result.data) {
       return result.data;
@@ -52,15 +34,8 @@ const fetchPortfolio = async () => {
 
 const fetchStockData = async (symbol: string) => {
   try {
-    console.log("Got here");
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${BASE_URL}/stocks/symbol/${symbol}`, {
+    const response = await apiFetch(`/stocks/symbol/${symbol}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
     });
     const result = await response.json();
     if (response.ok && result.data) {
@@ -77,14 +52,8 @@ const fetchStockData = async (symbol: string) => {
 
 const fetchStockPriceHistory = async (symbol: string) => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${BASE_URL}/stocks/stock/history/${symbol}`, {
+    const response = await apiFetch(`/stocks/stock/history/${symbol}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": API_KEY,
-        Authorization: `Bearer ${token}`,
-      },
     });
     const result = await response.json();
     if (response.ok && result.data) {
@@ -104,17 +73,9 @@ const fetchStockPriceHistory = async (symbol: string) => {
 
 const fetchStockQuantity = async (symbol: string) => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(
-      `${BASE_URL}/stocks/user/quantity/${symbol.trim()}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY,
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await apiFetch(
+      `/stocks/user/quantity/${symbol.trim()}`,
+      { method: "GET" }
     );
     const result = await response.json();
     if (response.ok && result.data) {
@@ -134,14 +95,8 @@ const buyStockUser = async (reqBody: {
   wallet_id: string;
   quantity: number;
 }) => {
-  const token = localStorage.getItem("token");
-  const response = await fetch(`${BASE_URL}/stocks/buy`, {
+  const response = await apiFetch(`/stocks/buy`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(reqBody),
   });
 
@@ -158,14 +113,8 @@ const sellStockUser = async (reqBody: {
   wallet_id: string;
   quantity: number;
 }) => {
-  const token = localStorage.getItem("token");
-  const response = await fetch(`${BASE_URL}/stocks/sell`, {
+  const response = await apiFetch(`/stocks/sell`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(reqBody),
   });
 
@@ -178,21 +127,12 @@ const sellStockUser = async (reqBody: {
 };
 
 const stockSearch = async (query: string, searchType: string) => {
-  const token = localStorage.getItem("token");
-  const baseUrl = `${BASE_URL}/stocks/search`;
-  const url =
+  const path =
     searchType === "symbol"
-      ? `${baseUrl}/symbol/${query}`
-      : `${baseUrl}/company/${query}`;
+      ? `/stocks/search/symbol/${query}`
+      : `/stocks/search/company/${query}`;
 
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await apiFetch(path, { method: "GET" });
   const result = await response.json();
   if (response.ok && result.data) {
     return result.data;
@@ -206,16 +146,8 @@ const fetchAllStocks = async (
   sort: string,
   sortOrder: string
 ) => {
-  const token = localStorage.getItem("token");
-  const url = `${BASE_URL}/stocks/all?sort=${sortOrder}&page=${pageNumber}&limit=10&sort_by=${sort}`;
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const path = `/stocks/all?sort=${sortOrder}&page=${pageNumber}&limit=10&sort_by=${sort}`;
+  const response = await apiFetch(path, { method: "GET" });
   const result = await response.json();
   if (response.ok && result.data) {
     return result.data;

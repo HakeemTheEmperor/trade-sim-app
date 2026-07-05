@@ -1,46 +1,30 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
+import { clearSession, isTokenValid } from "../functions/authToken";
 
 function ProtectedRoute() {
   const location = useLocation();
-  const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
+  const [isValid, setIsValid] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkToken = () => {
-      const token = localStorage.getItem("token");
-      if (!token) return setIsTokenValid(false);
-
-      try {
-        const decoded: any = jwtDecode(token);
-        const isExpired = decoded.exp * 1000 < Date.now();
-        if (isExpired) {
-          console.log("Token Expired");
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          return setIsTokenValid(false);
-        }
-        return setIsTokenValid(true);
-      } catch (err) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        return setIsTokenValid(false);
-      }
+    const check = () => {
+      const valid = isTokenValid();
+      if (!valid) clearSession();
+      setIsValid(valid);
     };
-    checkToken();
+
+    check();
+
+    // Re-check when another tab logs in/out (or the token is cleared globally
+    // by the API client on a 401), so auth state doesn't go stale.
+    window.addEventListener("storage", check);
+    return () => window.removeEventListener("storage", check);
   }, [location]);
 
-  if (isTokenValid === null) return <Spinner />; // Or a loading spinner
+  if (isValid === null) return <Spinner />;
 
-  return isTokenValid ? (
-    <Outlet />
-  ) : (
-    <Navigate
-      to="/welcome"
-      replace
-    />
-  );
+  return isValid ? <Outlet /> : <Navigate to="/welcome" replace />;
 }
 
 export default ProtectedRoute;
