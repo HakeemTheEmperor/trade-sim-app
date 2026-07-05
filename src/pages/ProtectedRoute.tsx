@@ -1,30 +1,31 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
-import { clearSession, isTokenValid } from "../functions/authToken";
+import { fetchCurrentUser } from "../functions/authService";
 
 function ProtectedRoute() {
   const location = useLocation();
-  const [isValid, setIsValid] = useState<boolean | null>(null);
+  const [isAuthed, setIsAuthed] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const check = () => {
-      const valid = isTokenValid();
-      if (!valid) clearSession();
-      setIsValid(valid);
+    let active = true;
+    // The token is an HttpOnly cookie we can't read, so ask the backend whether
+    // the session is valid.
+    fetchCurrentUser()
+      .then((user) => {
+        if (active) setIsAuthed(!!user);
+      })
+      .catch(() => {
+        if (active) setIsAuthed(false);
+      });
+    return () => {
+      active = false;
     };
-
-    check();
-
-    // Re-check when another tab logs in/out (or the token is cleared globally
-    // by the API client on a 401), so auth state doesn't go stale.
-    window.addEventListener("storage", check);
-    return () => window.removeEventListener("storage", check);
   }, [location]);
 
-  if (isValid === null) return <Spinner />;
+  if (isAuthed === null) return <Spinner />;
 
-  return isValid ? <Outlet /> : <Navigate to="/welcome" replace />;
+  return isAuthed ? <Outlet /> : <Navigate to="/welcome" replace />;
 }
 
 export default ProtectedRoute;

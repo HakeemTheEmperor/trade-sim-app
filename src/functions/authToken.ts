@@ -1,46 +1,37 @@
-import { jwtDecode } from "jwt-decode";
+// The JWT now lives in an HttpOnly cookie the browser sends automatically, so
+// JS can no longer read or decode it. This module only handles the bits the
+// client still needs: the CSRF token (a readable cookie) and the cached user
+// profile used for UI (non-sensitive).
 
-// Shape of the claims our backend puts in the JWT (see AuthService.generate_token).
-export type TokenClaims = {
-  exp?: number;
-  sub?: string;
-  role?: string;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-};
-
-const TOKEN_KEY = "token";
 const USER_KEY = "user";
+const LEGACY_TOKEN_KEY = "token";
+const CSRF_COOKIE = "csrf_access_token";
 
-export function getToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY);
+// Read the double-submit CSRF token that flask-jwt-extended sets as a readable
+// cookie. It must be echoed as the X-CSRF-TOKEN header on state-changing requests.
+export function getCsrfToken(): string | null {
+  const match = document.cookie.match(
+    new RegExp(`(?:^|;\\s*)${CSRF_COOKIE}=([^;]+)`)
+  );
+  return match ? decodeURIComponent(match[1]) : null;
 }
 
-// Typed, exception-safe decode. Returns null on any malformed token instead of
-// throwing (the previous `jwtDecode(token) as any` could throw and leaked types).
-export function decodeToken(token: string): TokenClaims | null {
+export function getStoredUser<T = unknown>(): T | null {
+  const raw = localStorage.getItem(USER_KEY);
+  if (!raw) return null;
   try {
-    return jwtDecode<TokenClaims>(token);
+    return JSON.parse(raw) as T;
   } catch {
     return null;
   }
 }
 
-// A token is valid only if it decodes and its (numeric) exp is in the future.
-export function isTokenValid(token: string | null = getToken()): boolean {
-  if (!token) return false;
-  const claims = decodeToken(token);
-  if (!claims || typeof claims.exp !== "number") return false;
-  return claims.exp * 1000 > Date.now();
+export function setStoredUser(user: unknown): void {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 export function clearSession(): void {
-  localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
-}
-
-export function setSession(token: string, user: unknown): void {
-  localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
+  // Clean up any token left in storage by the pre-cookie version of the app.
+  localStorage.removeItem(LEGACY_TOKEN_KEY);
 }

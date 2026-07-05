@@ -1,5 +1,5 @@
 import { apiFetch } from "./apiClient";
-import { clearSession, setSession } from "./authToken";
+import { clearSession, setStoredUser } from "./authToken";
 
 export async function handleSignUp(credentials: {
   email: string;
@@ -19,7 +19,9 @@ export async function handleSignUp(credentials: {
     throw data;
   }
 
-  setSession(data.token, data.user);
+  // The token is set by the server as an HttpOnly cookie; we only cache the
+  // non-sensitive user profile for UI.
+  setStoredUser(data.user);
 
   return data;
 }
@@ -39,9 +41,21 @@ export async function handleLogin(credentials: {
     throw data;
   }
 
-  setSession(data.token, data.user);
+  setStoredUser(data.user);
 
   return data;
+}
+
+// Confirms the session (HttpOnly cookie) is still valid and returns the current
+// user, or null if not authenticated. auth:false so the 401 probe doesn't
+// trigger the global redirect — callers decide what to do.
+export async function fetchCurrentUser() {
+  const response = await apiFetch(`/auth/me`, { method: "GET", auth: false });
+  if (!response.ok) {
+    return null;
+  }
+  const data = await response.json();
+  return data.user ?? null;
 }
 
 export async function logout() {
