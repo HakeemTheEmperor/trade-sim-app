@@ -10,6 +10,15 @@ import QuantityInput from "./QuantityInput";
 import { WalletProp } from "../mockData/Data";
 import { fetchUserWallets } from "../functions/walletService";
 import MainButton from "./MainButton";
+import { formatNumber, formatQuantity } from "../functions/utils";
+
+// "Percentage of a share" quick picks — buying a fraction of one share.
+const SHARE_FRACTIONS = [
+  { label: "10%", value: 0.1 },
+  { label: "25%", value: 0.25 },
+  { label: "50%", value: 0.5 },
+  { label: "1 Share", value: 1 },
+];
 
 function BuyStock() {
   const { stockSymbol } = useParams();
@@ -156,20 +165,40 @@ function BuyStock() {
           ${stockData.price.current_price}
         </p>
         <div className="font-light w-1/2 items-center  flex justify-end gap-3">
-          <p>{quantityOwned ? quantityOwned : 0} units</p>
+          <p>{formatQuantity(quantityOwned ?? 0)} units</p>
           <PercentageChange percentage={stockData.price.percentage_change} />
         </div>
       </div>
       <div className="mt-3 transparent_light w-full rounded-lg p-2">
         <p className="text-center text-lg">
-          Please specify how many units you intend to buy?
+          How much of {stockData.symbol} would you like to buy?
         </p>
+        <p className="text-center text-xs text-gray-400 mb-1">
+          You can buy a fraction of a share.
+        </p>
+        <div className="flex justify-center gap-2 flex-wrap mb-2">
+          {SHARE_FRACTIONS.map((f) => (
+            <button
+              key={f.label}
+              onClick={() => setBuyQuantity(f.value)}
+              className="px-3 py-1 rounded-full bg-green-600 text-white text-sm"
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
         <div className="flex justify-center">
           <QuantityInput
             value={buyQuantity}
             onChange={setBuyQuantity}
           />
         </div>
+        <p className="text-center text-sm mt-2">
+          Estimated cost:{" "}
+          <span className="font-bold">
+            ${formatNumber(buyQuantity * stockData.price.current_price)}
+          </span>
+        </p>
         {error && (
           <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
         )}
