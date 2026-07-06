@@ -1,4 +1,4 @@
-import { FaRegUser, FaLock } from "react-icons/fa";
+import { FaRegUser, FaLock, FaUserSecret } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { logout } from "../functions/authService";
 import { Link } from "react-router-dom";
@@ -37,6 +37,18 @@ function Settings() {
           </div>
           <span className="text-green-600 text-xl">&gt;</span>
         </li> */}
+        <Link to={"/account/shadows"}>
+          <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-pointer">
+            <div className="flex gap-10 items-center text-md">
+              <FaUserSecret
+                className="text-green-600"
+                size={20}
+              />
+              <span>Shadows</span>
+            </div>
+            <span className="text-green-600 text-xl">&gt;</span>
+          </li>
+        </Link>
         <Link to={"/account/security"}>
           <li className="flex justify-between items-center p-3 border-b-2 border-gray-700 cursor-pointer">
             <div className="flex gap-10 items-center text-md">

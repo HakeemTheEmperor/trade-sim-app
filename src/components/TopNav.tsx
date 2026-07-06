@@ -1,5 +1,5 @@
-import { MdNotifications } from "react-icons/md";
 import "../index.css";
+import NotificationBell from "./NotificationBell";
 
 function TopNav() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -19,10 +19,7 @@ function TopNav() {
             </span>
           </p>
         </div>
-        <MdNotifications
-          size={30}
-          fill="white"
-        />
+        <NotificationBell />
       </div>
     </div>
   );

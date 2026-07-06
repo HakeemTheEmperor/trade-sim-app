@@ -20,6 +20,7 @@ import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import ProfileSettingPage from "./pages/sub/ProfileSettingPage";
 import SecurityPage from "./pages/sub/SecurityPage";
+import ShadowsPage from "./pages/sub/ShadowsPage";
 
 function App() {
   return (
@@ -102,6 +103,10 @@ function App() {
             <Route
               path="account/security"
               element={<SecurityPage />}
+            />
+            <Route
+              path="account/shadows"
+              element={<ShadowsPage />}
             />
           </Route>
         </Route>
