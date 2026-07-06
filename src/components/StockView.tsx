@@ -170,6 +170,12 @@ function StockView() {
         image={companyData.image}
       />
       <PriceFluctuationChart data={chartData} />
+      <button
+        onClick={() => navigate(`/market/compare/${stockSymbol}`)}
+        className="my-3 self-end px-4 py-1.5 text-sm rounded-md bg-green-700 text-white"
+      >
+        Compare
+      </button>
       <div className="mb-3 border-t-2">
         <h3 className="text-2xl text-white font-bold mt-4">About</h3>
         <p className="text-gray-400">

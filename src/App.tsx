@@ -9,6 +9,7 @@ import Layout from "./pages/Layout";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import UserStocksPage from "./pages/sub/UserStocksPage";
 import StockViewPage from "./pages/sub/StockViewPage";
+import ComparePage from "./pages/sub/ComparePage";
 import BuyStockPage from "./pages/sub/BuyStockPage";
 import SellStockPage from "./pages/sub/SellStockPage";
 import TestPage from "./pages/TestPage";
@@ -90,6 +91,10 @@ function App() {
             <Route
               path="market/stock/:stockSymbol"
               element={<StockViewPage />}
+            />
+            <Route
+              path="market/compare/:stockSymbol"
+              element={<ComparePage />}
             />
             <Route
               path="account"
