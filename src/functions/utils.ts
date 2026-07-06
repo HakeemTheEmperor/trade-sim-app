@@ -31,6 +31,18 @@ function formatNumber(num: number): string {
   });
 }
 
+// Share quantities can be fractional (up to 6 dp). Show up to 6 decimals with
+// trailing zeros trimmed, so 2.500000 -> "2.5" and 0.123456 stays "0.123456".
+function formatQuantity(qty: number): string {
+  if (qty == null || isNaN(qty)) return "0";
+  return parseFloat(Number(qty).toFixed(6)).toString();
+}
+
+// Round to the 6 dp share scale the backend uses, to avoid float noise.
+function roundQuantity(qty: number): number {
+  return Math.round(qty * 1e6) / 1e6;
+}
+
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return (
@@ -53,5 +65,7 @@ export {
   shortenDescription,
   formatMarketCap,
   formatNumber,
+  formatQuantity,
+  roundQuantity,
   formatDate,
 };

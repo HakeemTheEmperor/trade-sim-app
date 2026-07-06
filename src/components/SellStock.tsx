@@ -10,6 +10,9 @@ import QuantityInput from "./QuantityInput";
 import { WalletProp } from "../mockData/Data";
 import { fetchUserWallets } from "../functions/walletService";
 import MainButton from "./MainButton";
+import { formatNumber, formatQuantity, roundQuantity } from "../functions/utils";
+
+const SELL_PERCENTS = [25, 50, 75, 100];
 
 function SellStock() {
   const { stockSymbol } = useParams();
@@ -20,6 +23,15 @@ function SellStock() {
   const [selectedWallet, setSelectedWallet] = useState<WalletProp | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Selling a percentage of the current holding. 100% sends the exact held
+  // quantity so nothing is left as dust.
+  const setSellPercent = (pct: number) => {
+    if (!quantityOwned) return;
+    setSellQuantity(
+      pct === 100 ? quantityOwned : roundQuantity((quantityOwned * pct) / 100)
+    );
+  };
 
   const sellStock = async () => {
     setError(null);
@@ -164,20 +176,39 @@ function SellStock() {
           ${stockData.price.current_price}
         </p>
         <div className="font-light w-1/2 items-center  flex justify-end gap-3">
-          <p>{quantityOwned ? quantityOwned : 0} units</p>
+          <p>{formatQuantity(quantityOwned ?? 0)} units</p>
           <PercentageChange percentage={stockData.price.percentage_change} />
         </div>
       </div>
       <div className="mt-3 transparent_light w-full rounded-lg p-2">
         <p className="text-center text-lg">
-          Please specify how many units you intend to sell?
+          How much of {stockData.symbol} would you like to sell?
         </p>
+        <div className="flex justify-center gap-2 flex-wrap mb-2">
+          {SELL_PERCENTS.map((pct) => (
+            <button
+              key={pct}
+              onClick={() => setSellPercent(pct)}
+              disabled={!quantityOwned}
+              className="px-3 py-1 rounded-full bg-green-600 text-white text-sm disabled:opacity-40"
+            >
+              {pct === 100 ? "All" : `${pct}%`}
+            </button>
+          ))}
+        </div>
         <div className="flex justify-center">
           <QuantityInput
             value={sellQuantity}
             onChange={setSellQuantity}
+            max={quantityOwned ?? undefined}
           />
         </div>
+        <p className="text-center text-sm mt-2">
+          Estimated proceeds:{" "}
+          <span className="font-bold">
+            ${formatNumber(sellQuantity * stockData.price.current_price)}
+          </span>
+        </p>
         {error && (
           <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
         )}
